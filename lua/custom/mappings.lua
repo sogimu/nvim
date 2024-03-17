@@ -27,30 +27,48 @@ M.dap = {
       "<cmd> DapStepInto <CR>",
       "Step into line"
     },
-    ["<S-f>"] = { -- RUN ALL GTESTS IN CURRENT FILE
+    ["<S-a>"] = { -- RUN ALL TESTS 
+      function()
+        local neotest = require("neotest");
+        -- local path = "/home/as-lizin/develop/shift-reduce-parser/tests/unit_tests/src"
+        local path = vim.fn.getcwd()
+        print( path )
+        neotest.run.run(path)
+      end,
+      "Run all tests",
+    },
+    ["<S-l>"] = { -- RUN LAST TEST 
+      function()
+        local neotest = require("neotest");
+        neotest.run.run_last()
+      end,
+      "Run last test",
+    },
+    ["<S-f>"] = { -- RUN ALL TESTS IN CURRENT FILE
       function()
         local neotest = require("neotest");
         local run = neotest.run;
+        print(vim.fn.expand("%"));
         run.run(vim.fn.expand("%"))
       end,
       "Run all tests in file",
     },
 
-    ["<S-t>"] = { -- RUN NEAREST GTEST IN CURRENT FILE
+    ["<S-t>"] = { -- RUN NEAREST TEST IN CURRENT FILE
       function()
         local neotest = require('neotest');
         neotest.run.run();
       end,
       "Run nearest test",
     },
-    ["<S-d>"] = { -- DEBUG NEAREST GTEST IN CURRENT FILE
+    ["<S-d>"] = { -- DEBUG NEAREST TEST IN CURRENT FILE
       function()
         local neotest = require('neotest');
         neotest.run.run({strategy = "dap"});
       end,
       "Debug nearest test",
     },
-    ["<S-s>"] = { -- RUN NEAREST GTEST IN CURRENT FILE
+    ["<S-s>"] = { -- RUN NEAREST TEST IN CURRENT FILE
       function()
         local neotest = require('neotest');
         if is_test_settings_open then

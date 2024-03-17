@@ -176,7 +176,17 @@ local plugins = {
       'alfaix/neotest-gtest',
       -- 'rosstang/neotest-catch2'
     },
+    cmd = {
+      "RunAllTestInDir"
+    },
     config = function()
+      vim.api.nvim_create_user_command("RunAllTestsInDir", function(args)
+        local neotest = require("neotest");
+        local path = args["args"]
+        path = path:gsub('"','')
+        neotest.run.run(path)
+      end, {});
+      lib = require("neotest.lib");
       require("neotest").setup({
         adapters = {
           -- require('neotest-catch2')(
@@ -193,9 +203,11 @@ local plugins = {
           --     }
           -- });
 
-          require("neotest-gtest").setup(
-            {}
-          );
+          -- require("neotest-gtest").setup(
+          --   {}
+          -- );local utils = require("neotest-gtest.utils")
+
+          require("neotest-gtest").setup({})
         }
       })
 
@@ -242,6 +254,35 @@ local plugins = {
           virt_text_win_col = nil                -- position the virtual text at a fixed window column (starting from the first text column) ,
                                                  -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
       }
+    end,
+  },
+  {
+    'tzachar/local-highlight.nvim',
+     init = function()
+      require('local-highlight').setup({
+          file_types = {'python', 'cpp', 'lua'}, -- If this is given only attach to this
+          -- OR attach to every filetype except:
+          disable_file_types = {'tex'},
+          hlgroup = 'Search',
+          cw_hlgroup = nil,
+          -- Whether to display highlights in INSERT mode or not
+          insert_mode = true,
+          min_match_len = 1,
+          max_match_len = math.huge,
+      })
+    end
+  },
+  {
+    "NvChad/nvterm",
+    init = function()
+      require("core.utils").load_mappings "nvterm"
+    end,
+    opts = function()
+      return require("custom.configs.nvterm")
+    end,
+    config = function(_, opts)
+      require "base46.term"
+      require("nvterm").setup(opts)
     end,
   }
 }
