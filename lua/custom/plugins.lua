@@ -284,6 +284,16 @@ local plugins = {
       require "base46.term"
       require("nvterm").setup(opts)
     end,
+  },
+  {
+    "FabijanZulj/blame.nvim",
+    init = function ()
+      require('blame').setup({
+        format = function(blame)
+          return string.format("%s %s %s", blame.author, blame.date, blame.summary)
+        end,
+      })
+    end
   }
 }
 return plugins
