@@ -94,6 +94,9 @@ local plugins = {
     end
   },
   {
+    "https://github.com/nvim-neotest/nvim-nio",
+  },
+  {
     "jose-elias-alvarez/null-ls.nvim",
 
     event = "VeryLazy",
