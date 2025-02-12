@@ -68,7 +68,7 @@ M.dap = {
       end,
       "Debug nearest test",
     },
-    ["<S-s>"] = { -- RUN NEAREST TEST IN CURRENT FILE
+    ["<S-s>"] = { -- OPEN NEOTEST SUMMARY PANEL
       function()
         local neotest = require('neotest');
         if is_test_settings_open then
