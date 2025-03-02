@@ -208,7 +208,14 @@ return {
   { 
     'Civitasv/cmake-tools.nvim',
     config = function()
-     require "plugins.configs.cmake-tools" 
+      require "plugins.configs.cmake-tools"
+    end
+  },
+  {
+    "FabijanZulj/blame.nvim",
+    lazy = false,
+    config = function()
+      require('blame').setup {}
     end,
-  }
+},
 }
