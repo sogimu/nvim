@@ -130,18 +130,9 @@ map("v", "<", "<gv", { remap = true })
 --         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 --       end
 -- )
-
-map("t", "<A-i>","<cmd> ToggleTerm direction=float <CR>"
-    -- function()
-      -- require("nvterm.terminal").toggle "float"
-    -- end
-)
-
-    map("n", "<A-i>","<cmd> ToggleTerm direction=float <CR>"
-      -- function()
-      --   -- require("nvterm.terminal").toggle "float"
-      -- end
-)
+-- Floating terminal
+map("t", "<A-i>","<cmd> ToggleTerm direction=float <CR>")
+map("n", "<A-i>","<cmd> ToggleTerm direction=float <CR>")
 
 map( "n", "<leader>cC", "<cmd> Task start cmake configure <CR>" )
 -- map( "n", "<leader>cD", [[:Task start cmake_kits configureDebug<cr>]], { silent = true } )
@@ -155,81 +146,81 @@ map( "n", "<leader>cr", "<cmd> Task start cmake run <CR>" )
 map( "n", "<leader>cb", "<cmd> Task start cmake build <CR>" )
 map( "n", "<leader>cB", "<cmd> Task start cmake build_all <CR>" )
 
-    map( "n", "<F26>",  -- CTRL+F2
-      "<cmd> DapTerminate <CR>"
-      -- "Terminate debugger",
-    ) 
-    map( "n", "<F32>",  -- CTRL+F8
-      "<cmd> DapToggleBreakpoint <CR>"
-      -- "Add breakpoint at line",
-    ) 
-    map( "n", "<F9>",  -- F9
-      "<cmd> CMakeDebug <CR>"
-      -- "Start debugger"
-    ) 
-    map( "n", "<F21>",  -- SHIFT+F9
-      "<cmd> DapContinue <CR>"
-      -- "Continue the debugger"
-    ) 
-    map( "n", "<F8>",  -- F8
-      "<cmd> DapStepOver <CR>"
-      -- "Step over line"
-    ) 
-    map( "n", "<F7>",  --F7
-      "<cmd> DapStepInto <CR>"
-      -- "Step into line"
-    ) 
-    map( "n", "<S-a>",  -- RUN ALL TESTS 
-      function()
-        local neotest = require("neotest");
-        -- local path = "/home/as-lizin/develop/shift-reduce-parser/tests/unit_tests/src"
-        local path = vim.fn.getcwd()
-        print( path )
-        neotest.run.run(path)
-      end
-      -- "Run all tests",
-    ) 
-    map( "n", "<S-l>",  -- RUN LAST TEST 
-      function()
-        local neotest = require("neotest");
-        neotest.run.run_last()
-      end
-      -- "Run last test",
-    ) 
-    map( "n", "<S-f>",  -- RUN ALL TESTS IN CURRENT FILE
-      function()
-        local neotest = require("neotest");
-        local run = neotest.run;
-        print(vim.fn.expand("%"));
-        run.run(vim.fn.expand("%"))
-      end
-      -- "Run all tests in file",
-    ) 
+map( "n", "<F26>",  -- CTRL+F2
+  "<cmd> DapTerminate <CR>"
+  -- "Terminate debugger",
+) 
+map( "n", "<F32>",  -- CTRL+F8
+  "<cmd> DapToggleBreakpoint <CR>"
+  -- "Add breakpoint at line",
+) 
+map( "n", "<F9>",  -- F9
+  "<cmd> CMakeDebug <CR>"
+  -- "Start debugger"
+) 
+map( "n", "<F21>",  -- SHIFT+F9
+  "<cmd> DapContinue <CR>"
+  -- "Continue the debugger"
+) 
+map( "n", "<F8>",  -- F8
+  "<cmd> DapStepOver <CR>"
+  -- "Step over line"
+) 
+map( "n", "<F7>",  --F7
+  "<cmd> DapStepInto <CR>"
+  -- "Step into line"
+) 
+map( "n", "<S-a>",  -- RUN ALL TESTS 
+  function()
+    local neotest = require("neotest");
+    -- local path = "/home/as-lizin/develop/shift-reduce-parser/tests/unit_tests/src"
+    local path = vim.fn.getcwd()
+    print( path )
+    neotest.run.run(path)
+  end
+  -- "Run all tests",
+) 
+map( "n", "<S-l>",  -- RUN LAST TEST 
+  function()
+    local neotest = require("neotest");
+    neotest.run.run_last()
+  end
+  -- "Run last test",
+) 
+map( "n", "<S-f>",  -- RUN ALL TESTS IN CURRENT FILE
+  function()
+    local neotest = require("neotest");
+    local run = neotest.run;
+    print(vim.fn.expand("%"));
+    run.run(vim.fn.expand("%"))
+  end
+  -- "Run all tests in file",
+) 
 
-    map( "n", "<S-t>",  -- RUN NEAREST TEST IN CURRENT FILE
-      function()
-        local neotest = require('neotest');
-        neotest.run.run();
-      end
-      -- "Run nearest test",
-    ) 
-    map( "n", "<S-d>",  -- DEBUG NEAREST TEST IN CURRENT FILE
-      function()
-        local neotest = require('neotest');
-        neotest.run.run({strategy = "dap"});
-      end
-      -- "Debug nearest test",
-    ) 
-    map( "n", "<S-s>",  -- OPEN NEOTEST SUMMARY PANEL
-      function()
-        local neotest = require('neotest');
-        if is_test_settings_open then
-          neotest.summary.close()
-          is_test_settings_open = false
-        else
-          neotest.summary.open()
-          is_test_settings_open = true
-        end
-      end
-      -- "Toggle tests settings",
-    ) 
+map( "n", "<S-t>",  -- RUN NEAREST TEST IN CURRENT FILE
+  function()
+    local neotest = require('neotest');
+    neotest.run.run();
+  end
+  -- "Run nearest test",
+) 
+map( "n", "<S-d>",  -- DEBUG NEAREST TEST IN CURRENT FILE
+  function()
+    local neotest = require('neotest');
+    neotest.run.run({strategy = "dap"});
+  end
+  -- "Debug nearest test",
+) 
+map( "n", "<S-s>",  -- OPEN NEOTEST SUMMARY PANEL
+  function()
+    local neotest = require('neotest');
+    if is_test_settings_open then
+      neotest.summary.close()
+      is_test_settings_open = false
+    else
+      neotest.summary.open()
+      is_test_settings_open = true
+    end
+  end
+  -- "Toggle tests settings",
+) 
