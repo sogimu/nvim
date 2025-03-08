@@ -29,6 +29,10 @@ map("v", "<leader>/", "gc", { remap = true })
 map("n", "<leader>fm", function()
   require("conform").format()
 end)
+
+-- indent
+map("v", ">", ">gv", { remap = true })
+map("v", "<", "<gv", { remap = true })
     
 -- map("n", "gD",
 --   function()
