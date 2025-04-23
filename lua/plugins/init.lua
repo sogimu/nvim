@@ -215,9 +215,17 @@ return {
   },
   {
     "FabijanZulj/blame.nvim",
-    lazy = false,
+    lazy = true,
     config = function()
       require('blame').setup {}
     end,
   },
+  {
+    "ibhagwan/fzf-lua",
+    lazy = true,
+    config = function()
+      require('fzf-lua').setup({{"default-native"},winopts={fullscreen=true}})
+    end,
+  }
+
 }
