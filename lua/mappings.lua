@@ -4,6 +4,7 @@ local map = vim.keymap.set
 map("n", "<C-s>", "<cmd> w <CR>")
 map("i", "jk", "<ESC>")
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
+map('x', 'p', [["_dP]], { noremap = true, silent = true }) -- hack to insert and replacment with help "p" without changing register "
 
 -- nvimtree
 map("n", "<C-n>", "<cmd> NvimTreeToggle <CR>")
@@ -134,17 +135,17 @@ map("v", "<", "<gv", { remap = true })
 map("t", "<A-i>","<cmd> ToggleTerm direction=float <CR>")
 map("n", "<A-i>","<cmd> ToggleTerm direction=float <CR>")
 
-map( "n", "<leader>cC", "<cmd> Task start cmake configure <CR>" )
+-- map( "n", "<leader>cC", "<cmd> Task start cmake configure <CR>" )
 -- map( "n", "<leader>cD", [[:Task start cmake_kits configureDebug<cr>]], { silent = true } )
 -- map( "n", "<leader>cP", [[:Task start cmake_kits reconfigure<cr>]], { silent = true } )
 -- map( "n", "<leader>cT", [[:Task start cmake_kits ctest<cr>]], { silent = true } )
 -- map( "n", "<leader>cK", [[:Task start cmake_kits clean<cr>]], { silent = true } )
 -- map( "n", "<leader>ct", [[:Task set_module_param cmake_kits target<cr>]], { silent = true } )
 -- map( "n", "<C-c>", [[:Task cancel<cr>]], { silent = true } )
-map( "n", "<leader>cr", "<cmd> Task start cmake run <CR>" )
+-- map( "n", "<leader>cr", "<cmd> Task start cmake run <CR>" )
 -- map( "n", "<F7>", [[:Task start cmake_kits debug<cr>]] )
-map( "n", "<leader>cb", "<cmd> Task start cmake build <CR>" )
-map( "n", "<leader>cB", "<cmd> Task start cmake build_all <CR>" )
+-- map( "n", "<leader>cb", "<cmd> Task start cmake build <CR>" )
+-- map( "n", "<leader>cB", "<cmd> Task start cmake build_all <CR>" )
 
 map( "n", "<F26>",  -- CTRL+F2
   "<cmd> DapTerminate <CR>"
@@ -210,6 +211,13 @@ map( "n", "<S-d>",  -- DEBUG NEAREST TEST IN CURRENT FILE
     neotest.run.run({strategy = "dap"});
   end
   -- "Debug nearest test",
+) 
+map( "n", "<S-dl>",  -- DEBUG LAST TEST 
+  function()
+    local neotest = require("neotest");
+    neotest.run.run_last({strategy = "dap"})
+  end
+  -- "Debug last test",
 ) 
 map( "n", "<S-s>",  -- OPEN NEOTEST SUMMARY PANEL
   function()
