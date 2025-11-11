@@ -208,14 +208,14 @@ return {
   },
   {
     "FabijanZulj/blame.nvim",
-    lazy = true,
+    lazy = false,
     config = function()
       require('blame').setup {}
     end,
   },
   {
     "ibhagwan/fzf-lua",
-    lazy = true,
+    lazy = false,
     config = function()
       require('fzf-lua').setup({{"default"},winopts={fullscreen=true}})
     end,

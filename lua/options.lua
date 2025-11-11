@@ -14,6 +14,9 @@ o.smartindent = true
 o.tabstop = 2
 o.softtabstop = 2
 
+-- Search result scrol - it's center search result on the screen
+o.scrolloff = 25
+
 vim.opt.fillchars = { eob = " " }
 o.ignorecase = true
 o.smartcase = true
