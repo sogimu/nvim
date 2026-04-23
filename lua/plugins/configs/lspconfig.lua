@@ -44,26 +44,24 @@ capabilities.textDocument.completion.completionItem = {
   },
 }     
 -- Setup language servers.
-local lspconfig = require "lspconfig"
-
-lspconfig.lua_ls.setup {
+vim.lsp.config("lua_ls", {
   capabilities = capabilities,
   settings = {
     Lua = {
       diagnostics = { globals = { "vim" } },
     },
   },
-}
+})
 
 -- setup multiple servers with same default options
 local servers = { "clangd" }
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-  on_attach = function(client, bufnr)
-    client.server_capabilities.signatureHelpProvider = false
-    -- on_attach(client, bufnr)
-  end,
+  vim.lsp.config(lsp, {
+    on_attach = function(client, bufnr)
+      client.server_capabilities.signatureHelpProvider = false
+      -- on_attach(client, bufnr)
+    end,
     capabilities = capabilities,
-  }
+  })
 end
