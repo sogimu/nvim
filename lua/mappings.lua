@@ -13,9 +13,81 @@ map("n", "<C-h>", "<cmd> NvimTreeFocus <CR>")
 -- telescope
 map("n", "<leader>ff", "<cmd> Telescope find_files <CR>")
 map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>")
-map("n", "<leader>fw", "<cmd> Telescope live_grep <CR>")
+map("n", "<leader>fw", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 map("n", "<leader>gt", "<cmd> Telescope git_status <CR>")
 map("n", "<leader>tr", "<cmd> Telescope resume <CR>")
+
+-- snacks picker
+map("n", "<leader>fe", function() Snacks.explorer() end, { desc = "File Explorer" })
+map("n", "<leader>fd", function() Snacks.picker.files() end, { desc = "Find Files" })
+map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Grep" })
+
+-- snacks picker
+-- Interactive file type picker
+map("n", "<leader>fi", function()
+ -- Use vim.ui.select for a simpler approach
+ local filetypes = {
+   { name = "All Files", ext = nil },
+   { name = "C/C++", ext = { "c", "cpp", "h", "hpp" } },
+   { name = "Lua", ext = { "lua" } },
+   { name = "Python", ext = { "py" } },
+   { name = "JavaScript/TypeScript", ext = { "js", "ts", "jsx", "tsx" } },
+   { name = "Markdown", ext = { "md", "markdown" } },
+   { name = "Config", ext = { "json", "yaml", "yml", "toml", "ini" } },
+   { name = "Shell", ext = { "sh", "bash", "zsh", "fish" } },
+   { name = "Web", ext = { "html", "css", "scss", "sass" } },
+   { name = "Rust", ext = { "rs" } },
+   { name = "Go", ext = { "go" } },
+   { name = "Java", ext = { "java" } },
+ }
+ 
+ local choices = {}
+ for _, ft in ipairs(filetypes) do
+   table.insert(choices, ft.name)
+ end
+ 
+ vim.ui.select(choices, {
+   prompt = "Select file type:",
+   format_item = function(item)
+     return item
+   end,
+ }, function(choice)
+   if choice then
+     for _, ft in ipairs(filetypes) do
+       if ft.name == choice then
+         Snacks.picker.files({ ft = ft.ext })
+         break
+       end
+     end
+   end
+ end)
+end, { desc = "Find Files by Type" })
+
+-- File picker with live extension filtering
+map("n", "<leader>fx", function()
+ local current_ft = {}
+ 
+ Snacks.picker.files({
+   live = true,
+   on_change = function(picker, item)
+     -- Extract extension from search pattern
+     local search = picker.input:get()
+     local ext_match = search:match("%.([a-zA-Z0-9]+)$")
+     
+     if ext_match and not vim.tbl_contains(current_ft, ext_match) then
+       current_ft = { ext_match }
+       picker:set_opts({ ft = current_ft })
+       picker:find()
+     elseif not ext_match and #current_ft > 0 then
+       current_ft = {}
+       picker:set_opts({ ft = nil })
+       picker:find()
+     end
+   end,
+   title = "Find Files (type .ext to filter)",
+   prompt = "Files (add .ext to filter): ",
+ })
+end, { desc = "Find Files with Live Extension Filter" })
 
 -- bufferline, cycle buffers
 map("n", "<Tab>", "<cmd> BufferLineCycleNext <CR>")
