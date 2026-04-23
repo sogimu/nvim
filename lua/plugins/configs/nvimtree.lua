@@ -75,4 +75,17 @@ local options = {
   },
 }
 
-require("nvim-tree").setup(options)
+local function on_attach(bufnr)
+  local api = require("nvim-tree.api")
+  api.config.mappings.default_on_attach(bufnr)
+
+  local opts = { buffer = bufnr, noremap = true, silent = true }
+
+  vim.keymap.set("n", "<C-s>", function()
+    require("custom.nvim-tree-search").start()
+  end, vim.tbl_extend("force", opts, { desc = "Incremental Search" }))
+end
+
+require("nvim-tree").setup(vim.tbl_extend("force", options, {
+  on_attach = on_attach,
+}))
