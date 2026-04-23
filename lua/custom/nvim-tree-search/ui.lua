@@ -39,7 +39,8 @@ function M.setup_overlay_keymaps(buf, state)
   end, opts)
 
   vim.keymap.set("i", "<Esc>", function()
-    require("custom.nvim-tree-search").stop()
+    require("custom.nvim-tree-search").stop(true)
+    vim.cmd("stopinsert")
   end, opts)
 
   -- <C-u>: clear whole search line (default insert <C-u> only clears to cursor)
@@ -90,9 +91,24 @@ end
 function M.open_current_match(state)
   if state.current_index > 0 and state.current_index <= #state.matches then
     local match = state.matches[state.current_index]
-    require("custom.nvim-tree-search").stop()
-    -- Pass node explicitly; api.node.open.edit accepts the internal Node directly
-    require("nvim-tree.api").node.open.edit(match.node)
+    
+    -- Store the match before stopping to avoid clearing it
+    local node = match.node
+    
+    -- Stop search overlay without restoring cursor
+    require("custom.nvim-tree-search").stop(false)
+    
+    -- Handle differently for files vs directories
+    if node.nodes then
+      -- Directory: expand/toggle in tree, keep cursor on it
+      require("nvim-tree.api").node.open.edit(node)
+    else
+      -- File: open normally
+      require("nvim-tree.api").node.open.edit(node)
+    end
+    
+    -- Ensure we're in Normal mode
+    vim.cmd("stopinsert")
   end
 end
 

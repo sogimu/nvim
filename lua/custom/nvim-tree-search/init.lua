@@ -49,7 +49,9 @@ function M.start()
   vim.cmd("startinsert!")
 end
 
-function M.stop()
+function M.stop(restore_cursor)
+  restore_cursor = restore_cursor ~= false -- Default to true for backward compatibility
+  
   if not state.active then
     return
   end
@@ -69,7 +71,7 @@ function M.stop()
   local view = require("nvim-tree.view")
   local tree_win = view.get_winnr()
 
-  if tree_win and vim.api.nvim_win_is_valid(tree_win) then
+  if restore_cursor and tree_win and vim.api.nvim_win_is_valid(tree_win) then
     vim.api.nvim_win_set_cursor(tree_win, state.original_cursor)
   end
 
