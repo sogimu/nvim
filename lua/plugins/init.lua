@@ -269,6 +269,17 @@ return {
   },
 
   {
+    "sogimu/text_selection_highlighting",
+    lazy = false,
+    config = function()
+      require("text_selection_highlighting").setup()
+    end,
+  },
+  {
+    "sogimu/nvim-tree-search",
+    lazy = true,
+  },
+  {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},

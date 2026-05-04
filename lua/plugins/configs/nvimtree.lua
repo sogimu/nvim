@@ -82,7 +82,7 @@ local function on_attach(bufnr)
   local opts = { buffer = bufnr, noremap = true, silent = true }
 
   vim.keymap.set("n", "<C-s>", function()
-    require("custom.nvim-tree-search").start()
+    require("nvim-tree-search").start()
   end, vim.tbl_extend("force", opts, { desc = "Incremental Search" }))
 end
 

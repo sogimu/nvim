@@ -1,6 +1,5 @@
 require "options"
 require "mappings"
-require "custom.text_selection_highlighting"
 require "commands"
 
 -- bootstrap plugins & lazy.nvim
